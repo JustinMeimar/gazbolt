@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTMX Textarea Example</title>
+  <script src="https://unpkg.com/htmx.org"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script>
+</head>
+<body>
+  <h1>HTMX Textarea Example</h1>
+  
+  <!-- Input Textarea -->
+  <textarea
+    id="input-textarea" 
+    name="input-textarea"
+    placeholder="Enter your program..."
+    rows="5"
+    cols="40"></textarea>
+
+  <br>
+
+  <!-- Submit Button -->
+  <button 
+    hx-post="/run"
+    hx-ext="json-enc"
+    hx-include="#input-textarea"
+    hx-target="#output-textarea">
+    Run Program
+  </button>
+
+  <!-- Output Textarea -->
+  <textarea
+    id="output-textarea"
+    placeholder="Response will appear here..."
+    rows="5"
+    cols="40"
+    readonly></textarea>
+</body>
+</html>
+
+
