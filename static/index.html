@@ -4,40 +4,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HTMX Textarea Example</title>
+  <title>GazBolt • Compiler Explorer</title>
+  <link rel="stylesheet" href="/static/style.css">
   <script src="https://unpkg.com/htmx.org"></script>
   <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script>
 </head>
 <body>
-  <h1>HTMX Textarea Example</h1>
-  
-  <!-- Input Textarea -->
-  <textarea
-    id="input-textarea" 
-    name="input-textarea"
-    placeholder="Enter your program..."
-    rows="5"
-    cols="40"></textarea>
+  <header>
+    <nav>
+      <div id="logo">LOGO</div>
+      <h1>GazBolt</h1>
+    </nav>
+  </header>
 
-  <br>
+  <div id="main-container">
+    <div id="left">
+      <select 
+        id="compiler" 
+        name="compiler"
+        hx-get="/compiler-options" 
+        hx-target="#compiler"
+        hx-trigger="load">
+        <option value="" disabled selected>Select an option...</option>
+      </select>
 
-  <!-- Submit Button -->
-  <button 
-    hx-post="/run"
-    hx-ext="json-enc"
-    hx-include="#input-textarea"
-    hx-target="#output-textarea">
-    Run Program
-  </button>
+      <textarea
+        id="input-stdin" 
+        name="input-stdin"
+        placeholder="Program standard input..."
+        rows="3"
+        cols="40">
+      </textarea>
 
-  <!-- Output Textarea -->
-  <textarea
-    id="output-textarea"
-    placeholder="Response will appear here..."
-    rows="5"
-    cols="40"
-    readonly></textarea>
+      <textarea
+        id="input-program" 
+        name="input-program"
+        placeholder="Enter your program..."
+        rows="10"
+        cols="40">
+      </textarea>
+
+      <button 
+        hx-post="/run"
+        hx-ext="json-enc"
+        hx-include="#input-program,#compiler,#input-stdin"
+        hx-target="#output-textarea">
+        Run Program
+      </button>
+    </div>
+
+    <div id="right">
+      <div id="output-panels">
+        <textarea
+          id="output-textarea"
+          placeholder="Response will appear here..."
+          rows="4"
+          cols="40"
+          readonly>
+        </textarea>
+
+        <textarea
+          id="output-stderr"
+          placeholder="Stderr will appear here..."
+          rows="4"
+          cols="40"
+          readonly>
+        </textarea>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2024 GazBolt</p>
+  </footer>
 </body>
 </html>
-
-
