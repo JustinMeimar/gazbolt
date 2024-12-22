@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTMX Textarea Example</title>
+  <script src="https://unpkg.com/htmx.org"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script>
+</head>
+<body>
+  <h1>GazBolt</h1>
+  
+   <select 
+    id="compiler" 
+    name="compiler"
+    hx-get="/compiler-options" 
+    hx-target="#compiler"
+    hx-trigger="load">
+    <!-- Placeholder for dynamic options -->
+    <option value="" disabled selected>Select an option...</option>
+  </select>
+
+  <!-- Input Textarea -->
+  <textarea
+    id="input-program" 
+    name="input-program"
+    placeholder="Enter your program..."
+    rows="5"
+    cols="40">
+  </textarea>
+
+ <!-- Standard Input Textarea -->
+  <textarea
+    id="input-stdin" 
+    name="input-stdin"
+    placeholder="Program standard input..."
+    rows="5"
+    cols="40">
+  </textarea>
+
+  <br>
+
+  <!-- Submit Button -->
+  <button 
+    hx-post="/run"
+    hx-ext="json-enc"
+    hx-include="#input-program,#compiler"
+    hx-target="#output-textarea">
+    Run Program
+  </button>
+
+  <!-- Output Textarea -->
+  <textarea
+    id="output-textarea"
+    placeholder="Response will appear here..."
+    rows="5"
+    cols="40"
+    readonly>
+  </textarea>
+
+  <!-- Stdoutput Textarea -->
+  <textarea
+    id="output-stdout"
+    placeholder="Stdout will appear here.."
+    rows="5"
+    cols="40"
+    readonly>
+  </textarea>
+
+  <!-- Stdoutput Textarea -->
+  <textarea
+    id="output-stderr"
+    placeholder="Stderrr will appear here.."
+    rows="5"
+    cols="40"
+    readonly>
+  </textarea>
+
+</body>
+</html>
+
