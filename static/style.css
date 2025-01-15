@@ -54,11 +54,8 @@ nav {
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin-left: 15px;
 }
-
-/* h1 { */
-/*   font-size: 1.2rem; */
-/* } */
 
 h1 {
   font-size: 1.2rem;
@@ -89,7 +86,6 @@ h1::after {
   color: #01f0b2;
 }
 
-/* Modern style for stdin selection */
 #stdin-checkbox {
   appearance: none;
   background-color: #232021;
@@ -152,7 +148,8 @@ h1::after {
 
 #main-container {
   display: flex;
-  flex: 1;
+  flex: 1 1 0;
+  overflow: hidden;
   margin: 0 1rem 1rem 1rem;
 }
 
@@ -166,20 +163,30 @@ h1::after {
 
 #editor {
   background-color: #232021;
-  /* background-color: #01f0b2; */
   padding: 0.7rem;
   flex: 1;
   display: flex;
   flex-direction: column;
-  /* overflow: hidden; */
-  /* max-height: 100%; */
+  overflow: hidden;
+  max-height: 100%;
+
+}
+.CodeMirror {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.CodeMirror::-webkit-scrollbar {
+  display: none;
 }
 
 .CodeMirror {
   height: 100%;
+  max-width: 100%;
   border-radius: 10px;
   padding: 5px;
-  /* overflow-y: auto; */
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
 #right {

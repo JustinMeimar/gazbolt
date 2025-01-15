@@ -51,7 +51,13 @@ router.post("/run", async (ctx) => {
     const payload = await ctx.request.body.json();
     const program = payload["input-program"];
     const compiler = payload["compiler"];
-    const compilerConfig = GazBoltConfig.compilers.find(c => c.value == compiler);
+    const compilerConfig: CompilerOption | undefined
+	      = GazBoltConfig.compilers.find(c => c.value == compiler);
+  
+    if (compilerConfig === undefined) {
+      /// bad
+      return 
+    }
 
     console.log(compiler, program, RunnerPath);
   
