@@ -2,10 +2,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
   <title>GazBolt • Compiler Explorer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/dracula.min.css"/>
   <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
   <script src="https://unpkg.com/htmx.org"></script>
   <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script>
 </head>
@@ -17,59 +20,51 @@
     </nav>
   </header>
 
-  <div id="main-container">
-    <div id="left">
-      <select 
-        id="compiler" 
-        name="compiler"
-        hx-get="/compiler-options" 
+  <div class="main-wrapper">
+    <!-- Settings -->
+    <div id="settings" class="container">
+      <select
+        id="compiler"
+        class="container"
+	name="compiler"
+        hx-get="/compiler-options"
         hx-target="#compiler"
-        hx-trigger="load">
+        hx-trigger="load"
+      >
         <option value="" disabled selected>Select an option...</option>
       </select>
 
-      <textarea
-        id="input-stdin" 
-        name="input-stdin"
-        placeholder="Program standard input..."
-        rows="3"
-        cols="40">
-      </textarea>
-
-      <textarea
-        id="input-program" 
-        name="input-program"
-        placeholder="Enter your program..."
-        rows="10"
-        cols="40">
-      </textarea>
-
-      <button 
-        hx-post="/run"
-        hx-ext="json-enc"
-        hx-include="#input-program,#compiler,#input-stdin"
-        hx-target="#output-textarea">
-        Run Program
-      </button>
+      <label for="stdin-checkbox">Standard Input</label>
+      <input
+        type="checkbox"
+        id="stdin-checkbox"
+        onclick="toggleStdInput()"
+      />
     </div>
 
-    <div id="right">
-      <div id="output-panels">
+    <!-- Main container -->
+    <div id="main-container">
+      <!-- Left: CodeMirror editor -->
+      <div id="left">
+        <div id="editor" class="container"></div>
+      </div>
+
+      <!-- Right: Output textareas -->
+      <div id="right">
         <textarea
           id="output-textarea"
-          placeholder="Response will appear here..."
+	  class="container"
           rows="4"
-          cols="40"
-          readonly>
-        </textarea>
-
+          readonly
+          placeholder="Response will appear here..."
+        ></textarea>
         <textarea
           id="output-stderr"
+          class="container"
+	  rows="4"
+          readonly
           placeholder="Stderr will appear here..."
-          rows="4"
-          cols="40"
-          readonly>
-        </textarea>
+        ></textarea>
       </div>
     </div>
   </div>
@@ -77,5 +72,27 @@
   <footer>
     <p>© 2024 GazBolt</p>
   </footer>
+
+  <!-- Initialize CodeMirror -->
+  <script>
+    const editor = CodeMirror(document.getElementById('editor'), {
+      mode: 'javascript',
+      theme: 'dracula',
+      lineNumbers: true,
+      autoCloseBrackets: true,
+      matchBrackets: true,
+    });
+
+    // Refresh CodeMirror on window resize to handle layout changes
+    window.addEventListener('resize', () => editor.refresh());
+
+    // Example of toggling stdin input area (if you add #input-stdin somewhere)
+    function toggleStdInput() {
+      const inputStd = document.getElementById('input-stdin');
+      if (inputStd) {
+        inputStd.classList.toggle('hidden');
+      }
+    }
+  </script>
 </body>
 </html>
