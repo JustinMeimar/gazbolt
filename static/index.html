@@ -11,6 +11,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
   <script src="https://unpkg.com/htmx.org"></script>
   <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script>
+  <style>
+  .hidden {
+    display: none;
+  }
+  </style>
 </head>
 <body>
   <header>
@@ -21,37 +26,89 @@
   </header>
 
   <div class="main-wrapper">
-    <!-- Settings -->
     <div id="settings" class="container">
-      <select
-        id="compiler"
-        class="container"
-	name="compiler"
-        hx-get="/compiler-options"
-        hx-target="#compiler"
-        hx-trigger="load"
-      >
-        <option value="" disabled selected>Select an option...</option>
-      </select>
 
       <label for="stdin-checkbox">Standard Input</label>
       <input
-        type="checkbox"
-        id="stdin-checkbox"
-        onclick="toggleStdInput()"
+	type="checkbox"
+	class="checkbox"
+	id="stdin-checkbox"
+	onclick="document.getElementById('textarea-stdin').classList.toggle('hidden')"
       />
-    </div>
 
+      <label for="compiler-flags-checkbox">Compiler Options</label>
+      <input
+	type="checkbox"
+	class="checkbox"
+	id="compiler-flags-checkbox"
+	onclick="document.getElementById('textarea-compiler-flags').classList.toggle('hidden')"
+      />
+      <select
+	id="compiler"
+	class="dropdown"
+	name="compiler"
+	hx-get="/compiler-options"
+	hx-target="#compiler"
+	hx-trigger="load"
+	hx-on="change: setCompiler(this.value)"
+      >
+    </div>
+    
     <!-- Main container -->
     <div id="main-container">
       <!-- Left: CodeMirror editor -->
-      <div id="left">
-        <div id="editor" class="container"></div>
+      <div id="left">	
+        <div id="editor" class="container">
+	  <div id="editor-options">
+
+	    <select
+	      id="dropdown-program"
+	      name="compiler"
+	      class="dropdown"
+	      hx-vals="js:{cc: state.cc}"
+	      hx-get="/program-defaults"
+	      hx-target="#dropdown-program"
+	      hx-trigger="load"
+	      hx-on="change: setEditorText(this.value)"
+	    >
+	    </select>
+	    <select id="dropdown-font" name="choices" class="dropdown">
+		<option value="16px">16px</option>
+		<option value="18px" disabled selected>18px</option>
+		<option value="20px">20px</option>
+		<option value="22px">22px</option>
+		<option value="24px">24px</option>
+		<option value="26px">26px</option>
+	    </select>
+	    <button
+	      id="clear-button"
+	      class="button"
+	    >Clear
+	    </button>
+	    <textarea
+	      id="textarea-compiler-flags"
+	      class="hidden"
+	      rows="1"
+	      placeholder="Compiler Flags"
+	    ></textarea>
+	  </div> 
+	  <div id="editor-body"> <!-- CodeMirror is injected here at runtime --> </div> 
+	</div>
       </div>
 
       <!-- Right: Output textareas -->
       <div id="right">
         <textarea
+          id="textarea-stdin"
+	  class="container hidden"
+          rows="4"
+          placeholder="Standard Input..."
+	  hx-post="/handle-input"
+	  hx-trigger="change"
+	  hx-vals="js:{input: this.value}"
+	  hx-target="this"
+        ></textarea>
+	<textarea
           id="output-textarea"
 	  class="container"
           rows="4"
@@ -75,6 +132,12 @@
 
   <!-- Initialize CodeMirror -->
   <script>
+  
+    /// Global state because HTMX is confusing
+    const state = {
+      cc: "generator",
+    }
+
     const editor = CodeMirror(document.getElementById('editor'), {
       mode: 'javascript',
       theme: 'dracula',
@@ -83,16 +146,51 @@
       matchBrackets: true,
     });
 
+     
+    // Update editor text
+    function setEditorText(value) {
+      editor.setValue(value);
+      editor.refresh();
+    }
+ 
+    function setCompiler(value) {
+      state.cc = value; 
+      const programDropdown = document.getElementById('dropdown-program');
+      
+      htmx.ajax('GET', '/program-defaults', {
+	target: '#dropdown-program',
+	swap: 'innerHTML',
+	values: { cc: state.cc }
+      });
+      editor.setValue('');
+      editor.refresh();
+      return state.cc;
+    }
+
+    //// Listeners
+
     // Refresh CodeMirror on window resize to handle layout changes
     window.addEventListener('resize', () => editor.refresh());
 
-    // Example of toggling stdin input area (if you add #input-stdin somewhere)
-    function toggleStdInput() {
-      const inputStd = document.getElementById('input-stdin');
-      if (inputStd) {
-        inputStd.classList.toggle('hidden');
-      }
-    }
+    /// clear listener 
+    document.getElementById('clear-button').addEventListener('click', () => {
+      editor.setValue('');
+    });
+  
+    // Font size dropdown listener
+    document.getElementById('dropdown-font').addEventListener('change', (event) => {
+      editor.getWrapperElement().style.fontSize =  event.target.value;;
+      editor.refresh();
+    });
+
+    // Font size dropdown listener
+    document.getElementById('compiler').addEventListener('change', (event) => {
+      // editor.getWrapperElement().style.fontSize =  event.target.value;;
+      // editor.refresh();
+      state.cc = event.target.value;
+      console.log(event.target.value);
+    });
+
   </script>
 </body>
 </html>

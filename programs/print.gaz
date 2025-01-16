@@ -1,4 +1,5 @@
 procedure main() returns integer {
-
+  
+  "Hello, World" -> std_output;
   return 0;
 }

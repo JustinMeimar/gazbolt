@@ -1,3 +1,5 @@
+/// file: main.ts
+/// desc: routes for the Gazbolt backend
 
 import { Application, Router, send } from "@oak/oak";
 import { GazBoltConfig, CompilerOption, RunnerPath } from './config.ts';
@@ -16,7 +18,7 @@ router.get("/", async (ctx) => {
 });
 
 router.get("/compiler-options", (ctx) => {
-
+  
   const generateOptions = (options: CompilerOption[]) => {
     return options
       .map((option) => `<option value="${option.value}">${option.label}</option>`)
@@ -24,6 +26,49 @@ router.get("/compiler-options", (ctx) => {
   }
   ctx.response.status = 200;
   ctx.response.body = generateOptions(GazBoltConfig.compilers);
+})
+
+router.get("/program-defaults", async (ctx) => {
+  
+  try {
+
+    const selectedCompiler = ctx.request.url.searchParams.get("cc");  
+    const compilerConfig = GazBoltConfig.compilers.find(config => (config.value === selectedCompiler));
+    
+    if (!compilerConfig || !selectedCompiler) {
+      ctx.response.status = 404;
+      return;
+    }
+
+    const read_prog = async (path: string): Promise<string> => {
+      return await Deno.readTextFile(path);
+    };
+
+    const format_path = (path: string): string => {
+      const sanitizedPath = path.replace(/[\n\t\r]/g, "");
+      return sanitizedPath.split("/").pop() || sanitizedPath;
+    };
+  
+    const options = await Promise.all(
+      compilerConfig.default_programs.map(async (path: string) => {
+	const content = await read_prog(path);
+	const safeContent = content
+	  .replace(/&/g, "&amp;")
+	  .replace(/"/g, "&quot;")
+	  .replace(/</g, "&lt;")
+	  .replace(/>/g, "&gt;");
+	const safePath = format_path(path);
+	return `<option value="${safeContent}">${safePath}</option>`;
+      })
+    );
+
+    ctx.response.status = 200;
+    ctx.response.body = options.join("\n");
+
+  } catch (_error) {
+    ctx.response.status = 500;
+    ctx.response.body = "Internal Server Error.";
+  }
 })
 
 router.get("/static/:path+", async (ctx) => { 
@@ -80,6 +125,6 @@ const app = new Application();
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-console.log("Server running at http://localhost:8000");
-app.listen({port: 8000});
+console.log("Server running at http://localhost:8001");
+app.listen({port: 8001});
 
