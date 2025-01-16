@@ -15,6 +15,7 @@
     "jsr:@std/media-types@1": "1.1.0",
     "jsr:@std/path@1": "1.0.8",
     "jsr:@std/path@^1.0.8": "1.0.8",
+    "npm:create-vite@latest": "6.1.1",
     "npm:path-to-regexp@6.2.1": "6.2.1"
   },
   "jsr": {
@@ -81,6 +82,9 @@
     }
   },
   "npm": {
+    "create-vite@6.1.1": {
+      "integrity": "sha512-oHcCcikmJqWVwUCf3OhwRwnTHY062koziG7niDvMPBEXnie/ME5b22v/Z9PuyWhnM0Yy4iTXk0y9ZRMivNXhvQ=="
+    },
     "path-to-regexp@6.2.1": {
       "integrity": "sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw=="
     }

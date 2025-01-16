@@ -1,0 +1,267 @@
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #333333;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555555;
+  border-radius: 10px;
+  border: 2px solid #333333;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #888888;
+}
+
+::-webkit-scrollbar-button {
+  background-color: #444444;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-corner {
+  background: #333333;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #131213;
+  color: #ccc;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+header {
+  background-color: #232021;
+  padding: 1rem;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 15px;
+}
+
+h1 {
+  font-size: 1.2rem;
+  position: relative;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #01f0b2;
+}
+
+#editor-options {
+  padding-bottom: 10px;
+}
+
+.button {
+  background-color: #131213;
+  border: 1px solid #01f0b2;
+  color: #ccc;
+  padding: 0.5rem;
+  min-width: 90px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#textarea-compiler-flags {
+  background-color: #131213;
+  padding: 0.5rem;
+  border: 1px solid #01f0b2;
+  width: 100%;
+  border-radius: 5px;
+  resize: none;
+  margin-top: 10px; /* Add spacing if needed */
+}
+.dropdown {
+  background-color: #131213;
+  border: 1px solid #01f0b2;
+  color: #ccc;
+  padding: 0.5rem;
+  /* min-width: 90px; */
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.dropdown option {
+  background-color: #232021;
+  color: #01f0b2;
+}
+
+.checkbox {
+  appearance: none;
+  background-color: #232021;
+  border: 2px solid #01f0b2;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 5px;
+  position: relative;
+}
+
+.checkbox:checked {
+  background-color: #01f0b2;
+  border-color: #01f0b2;
+}
+
+.checkbox:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 6px;
+  height: 10px;
+  border: solid #131213;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+#logo {
+  font-weight: bold;
+}
+
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#settings {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  margin-left: 18px;
+  padding-bottom: 0rem;
+  background-color: #131213;
+}
+
+#compiler {
+  background-color: #131213;
+  border: 1px solid #444;
+  color: #ccc;
+  padding: 0.5rem;
+  min-width: 180px;
+}
+
+#stdin-checkbox {
+  cursor: pointer;
+}
+
+/* #main-container { */
+/*   display: flex; */
+/*   flex: 1 1 0; */
+/*   overflow: hidden; */
+/*   border: 1px solid red; */
+/*   margin: 0 1rem 1rem 1rem; */
+/* } */
+/**/
+#left {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+#editor {
+  background-color: #232021;
+  padding: 0.7rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 100%;
+
+}
+.CodeMirror {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.CodeMirror::-webkit-scrollbar {
+  display: none;
+}
+
+.CodeMirror {
+  height: 100%;
+  max-width: 100%;
+  border-radius: 10px;
+  padding: 5px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+#right {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+textarea {
+  background-color: #232021;
+  border: 1px solid #131213;
+  color: #ccc;
+  resize: none;
+  padding: 0.9rem;
+  flex: 1;
+}
+
+footer {
+  background-color: #191918;
+  text-align: center;
+  padding: 0.5rem;
+  color: #999;
+}
+
+.container {
+  border-radius: 10px;
+}
+/**/
+/* .logo { */
+/*   height: 6em; */
+/*   padding: 1.5em; */
+/*   will-change: filter; */
+/*   transition: filter 300ms; */
+/* } */
+/* .logo:hover { */
+/*   filter: drop-shadow(0 0 2em #646cffaa); */
+/* } */
+/* .logo.solid:hover { */
+/*   filter: drop-shadow(0 0 2em #61dafbaa); */
+/* } */
+/**/
+/* .card { */
+/*   padding: 2em; */
+/* } */
+/**/
+/* .read-the-docs { */
+/*   color: #888; */
+/* } */
