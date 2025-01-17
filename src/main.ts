@@ -91,34 +91,37 @@ router.get("/static/:path+", async (ctx) => {
 });
 
 router.post("/run", async (ctx) => {
+  console.log("Hello ");
   
-  try {
+  // try {
+    console.log("Received run: body: ", ctx.request.body);
     const payload = await ctx.request.body.json();
-    const program = payload["input-program"];
-    const compiler = payload["compiler"];
-    const compilerConfig: CompilerOption | undefined
-	      = GazBoltConfig.compilers.find(c => c.value == compiler);
-  
-    if (compilerConfig === undefined) {
-      /// bad
-      return 
-    }
-
-    console.log(compiler, program, RunnerPath);
-  
-    const command = new Deno.Command(RunnerPath, {
-      args: [compilerConfig.configPath, "--exec", program]
-    });
-  
-    const { stdout, stderr } = await command.output();
-
-    console.log("STDOUT: ", new TextDecoder().decode(stdout));
-    console.log("STDERR: ", new TextDecoder().decode(stderr));
+    console.log("Received run: body: ", payload);
+  //   const program = payload["input-program"];
+  //   const compiler = payload["compiler"];
+  //   const compilerConfig: CompilerOption | undefined
+	 //      = GazBoltConfig.compilers.find(c => c.value == compiler);
+  // 
+  //   if (compilerConfig === undefined) {
+  //     /// bad
+  //     return 
+  //   }
+  //
+  //   console.log(compiler, program, RunnerPath);
+  // 
+  //   const command = new Deno.Command(RunnerPath, {
+  //     args: [compilerConfig.configPath, "--exec", program]
+  //   });
+  // 
+  //   const { stdout, stderr } = await command.output();
+  //
+  //   console.log("STDOUT: ", new TextDecoder().decode(stdout));
+  //   console.log("STDERR: ", new TextDecoder().decode(stderr));
     ctx.response.status = 200;
-  } catch (_e) {
-    ctx.response.status = 500; 
-    ctx.response.body = "Internal Server Error.";
-  }
+  // } catch (_e) {
+  //   ctx.response.status = 500; 
+  //   ctx.response.body = "Internal Server Error.";
+  // }
 });
 
 const app = new Application();

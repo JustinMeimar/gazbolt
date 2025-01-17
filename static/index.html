@@ -10,12 +10,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
   <script src="https://unpkg.com/htmx.org"></script>
-  <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script>
-  <style>
-  .hidden {
-    display: none;
-  }
-  </style>
+  <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script> 
+  <script src="/static/client.js"></script> 
 </head>
 <body>
   <header>
@@ -35,8 +31,7 @@
 	id="stdin-checkbox"
 	onclick="document.getElementById('textarea-stdin').classList.toggle('hidden')"
       />
-
-      <label for="compiler-flags-checkbox">Compiler Options</label>
+      <label for="compiler-flags-checkbox">Compiler Flags</label>
       <input
 	type="checkbox"
 	class="checkbox"
@@ -51,7 +46,7 @@
 	hx-target="#compiler"
 	hx-trigger="load"
 	hx-on="change: setCompiler(this.value)"
-      >
+      > 
     </div>
     
     <!-- Main container -->
@@ -65,7 +60,7 @@
 	      id="dropdown-program"
 	      name="compiler"
 	      class="dropdown"
-	      hx-vals="js:{cc: state.cc}"
+	      hx-vals="js:{cc: getState().getCompiler()}"
 	      hx-get="/program-defaults"
 	      hx-target="#dropdown-program"
 	      hx-trigger="load"
@@ -85,6 +80,12 @@
 	      class="button"
 	    >Clear
 	    </button>
+	    <button
+	      id="clear-button"
+	      class="button"
+	      hx-on="click: getState().run()"
+	    >Run
+	    </button>
 	    <textarea
 	      id="textarea-compiler-flags"
 	      class="hidden"
@@ -92,7 +93,8 @@
 	      placeholder="Compiler Flags"
 	    ></textarea>
 	  </div> 
-	  <div id="editor-body"> <!-- CodeMirror is injected here at runtime --> </div> 
+	  <div id="editor-body"
+	  > <!-- CodeMirror is injected here at runtime --> </div> 
 	</div>
       </div>
 
@@ -103,10 +105,6 @@
 	  class="container hidden"
           rows="4"
           placeholder="Standard Input..."
-	  hx-post="/handle-input"
-	  hx-trigger="change"
-	  hx-vals="js:{input: this.value}"
-	  hx-target="this"
         ></textarea>
 	<textarea
           id="output-textarea"
@@ -127,70 +125,19 @@
   </div>
 
   <footer>
-    <p>© 2024 GazBolt</p>
+    <p>© 2025 GazBolt</p>
   </footer>
 
   <!-- Initialize CodeMirror -->
   <script>
-  
-    /// Global state because HTMX is confusing
-    const state = {
-      cc: "generator",
-    }
-
-    const editor = CodeMirror(document.getElementById('editor'), {
+     editor = CodeMirror(document.getElementById('editor'), {
       mode: 'javascript',
       theme: 'dracula',
       lineNumbers: true,
       autoCloseBrackets: true,
       matchBrackets: true,
     });
-
-     
-    // Update editor text
-    function setEditorText(value) {
-      editor.setValue(value);
-      editor.refresh();
-    }
- 
-    function setCompiler(value) {
-      state.cc = value; 
-      const programDropdown = document.getElementById('dropdown-program');
-      
-      htmx.ajax('GET', '/program-defaults', {
-	target: '#dropdown-program',
-	swap: 'innerHTML',
-	values: { cc: state.cc }
-      });
-      editor.setValue('');
-      editor.refresh();
-      return state.cc;
-    }
-
-    //// Listeners
-
-    // Refresh CodeMirror on window resize to handle layout changes
-    window.addEventListener('resize', () => editor.refresh());
-
-    /// clear listener 
-    document.getElementById('clear-button').addEventListener('click', () => {
-      editor.setValue('');
-    });
-  
-    // Font size dropdown listener
-    document.getElementById('dropdown-font').addEventListener('change', (event) => {
-      editor.getWrapperElement().style.fontSize =  event.target.value;;
-      editor.refresh();
-    });
-
-    // Font size dropdown listener
-    document.getElementById('compiler').addEventListener('change', (event) => {
-      // editor.getWrapperElement().style.fontSize =  event.target.value;;
-      // editor.refresh();
-      state.cc = event.target.value;
-      console.log(event.target.value);
-    });
-
   </script>
 </body>
 </html>
+

@@ -84,6 +84,7 @@ h1::after {
   min-width: 90px;
   cursor: pointer;
   border-radius: 5px;
+  margin-right: 10px;
 }
 
 #textarea-compiler-flags {
@@ -100,7 +101,6 @@ h1::after {
   border: 1px solid #01f0b2;
   color: #ccc;
   padding: 0.5rem;
-  /* min-width: 90px; */
   border-radius: 5px;
   margin-right: 10px;
 }
@@ -240,4 +240,8 @@ footer {
 
 .container {
   border-radius: 10px;
+}
+
+.hidden {
+  display: none;
 }
