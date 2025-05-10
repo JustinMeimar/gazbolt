@@ -1,12 +1,12 @@
 <script>
-  import Header from '$lib/components/Header.svelte';
-  import Footer from '$lib/components/Footer.svelte';
-  import CodeEditor from '$lib/components/CodeEditor.svelte';
-  import OutputPanel from '$lib/components/OutputPanel.svelte';
-  import { code, stdout, stderr, stdin } from '$lib/stores/codeStore';
+  import Header from './components/Header.svelte';
+  import Footer from './components/Footer.svelte';
+  import CodeEditor from './components/CodeEditor.svelte';
+  import OutputPanel from './components/OutputPanel.svelte';
+  import { code, stdout, stderr, stdin } from './stores/codeStore';
 </script>
 
-<div class="flex flex-col h-screen" style="background-color: #131312;">
+<main class="flex flex-col h-screen" style="background-color: #131312;">
   <Header />
 
   <!-- Main content - Fill all available space between header and footer -->
@@ -52,5 +52,4 @@
   </div>
 
   <Footer />
-</div>
-
+</main>
