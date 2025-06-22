@@ -6,6 +6,39 @@
   export let content = "";
   export let isError = false;
   export let isInput = false;
+
+  let showRaw = false;
+  let inputValue = "";
+  let isValidRawStr = true;
+   
+  $: if (inputValue) {
+    if (showRaw) {
+      if (!setRawBytes(inputValue)) {
+        isValidRawStr = false;
+      } else {
+        isValidRawStr = true;
+      }
+    } else {
+      $stdin = inputValue; 
+    }
+  }
+
+  const toRawBytes = (str) => {
+    if (!str) return "";
+    const escaped = JSON.stringify(str);
+    return "b'" + escaped.slice(1, -1) + "'";
+  }
+  
+  const setRawBytes = () => {
+    const match = inputValue.match(/^b'(.*)'$/s);
+    if (!match) {
+      return false;
+    }
+    $stdin = JSON.parse('"' + match[1] + '"');
+    return true;
+  }
+  $: displayContent = showRaw ? toRawBytes(content) : content;
+
 </script>
 
 <div style="background-color: #222020;
@@ -15,24 +48,37 @@
             display: flex;
             flex-direction: column;"
 >
-  <h3 class="text-base font-medium p-3" style="color: #01F1B3;">
-    {title}
-  </h3>
+  <div class="flex items-center justify-between p-3">
+    <h3 class="text-base font-medium" style="color: #01F1B3;">
+      {title}
+    </h3>
+    <label class="flex items-center gap-2 text-xs cursor-pointer" style="color: #01F1B3;">
+      <input
+        type="checkbox"
+        bind:checked={showRaw}
+        class="w-3 h-3"
+      />
+      Raw
+    </label>
+  </div>
+  
   <div class="flex-grow flex flex-col overflow-hidden" style="min-height: 0;">
     <div class="text-xs py-1 px-3" style="background-color: #131312; color: #01F1B3;">{panelType}</div>
-    
     {#if isInput}
       <textarea
-        bind:value={$stdin}
-        placeholder="Enter input here..."
+        bind:value={inputValue}
+        placeholder={showRaw ? "Enter raw input: b'hello\\nworld'" : "Enter input here..."}
         class="font-mono w-full p-3 text-sm focus:outline-none flex-grow"
-        style="background-color: #131312; color: white; border: none; resize: none; min-height: 0;"
+        style="background-color: #131312; color: {isValidRawStr ? 'white' : '#ff6b6b'}; border: none; resize: none; min-height: 0; tab-size: 2;"
+        spellcheck="false"
+        on:keydown={(e) => e.key === 'Tab' && e.preventDefault()}
       ></textarea>
     {:else}
       <pre 
         class="font-mono w-full p-3 text-sm overflow-auto flex-grow" 
         style="background-color: #131312; color: {isError && content ? '#ff6b6b' : 'white'}; min-height: 0;"
-      >{content}</pre>
+      >{displayContent}</pre>
     {/if}
   </div>
 </div>
+
