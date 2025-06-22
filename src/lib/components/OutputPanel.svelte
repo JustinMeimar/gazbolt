@@ -1,5 +1,5 @@
 <script>
-  import { stdin } from '$lib/stores/codeStore';
+  import { stdin, exitStatus } from '$lib/stores/codeStore';
   
   export let title = "";
   export let panelType = ""; // stdout, stderr, or stdin
@@ -29,16 +29,21 @@
     return "b'" + escaped.slice(1, -1) + "'";
   }
   
-  const setRawBytes = () => {
-    const match = inputValue.match(/^b'(.*)'$/s);
-    if (!match) {
-      return false;
+  const setRawBytes = () => { 
+    try {
+      const match = inputValue.match(/^b'(.*)'$/s);
+      if (!match) {
+        $stdin = '' // Null value for invalid parse of bytes string.
+        return false;
+      }
+      $stdin = JSON.parse('"' + match[1] + '"');
+    } catch(error) {
+      // parse can fail for partial strings like b'\'
+      $stdin = ''
     }
-    $stdin = JSON.parse('"' + match[1] + '"');
     return true;
   }
   $: displayContent = showRaw ? toRawBytes(content) : content;
-
 </script>
 
 <div style="background-color: #222020;
@@ -63,7 +68,10 @@
   </div>
   
   <div class="flex-grow flex flex-col overflow-hidden" style="min-height: 0;">
-    <div class="text-xs py-1 px-3" style="background-color: #131312; color: #01F1B3;">{panelType}</div>
+    <div class="text-xs py-1 px-3" style="background-color: #131312; color: #01F1B3;">
+      Bytes: 1
+      {panelType == "stderr" ? `Exit Status: ${$exitStatus}` : "None" }
+    </div>
     {#if isInput}
       <textarea
         bind:value={inputValue}

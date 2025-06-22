@@ -12,9 +12,9 @@
       <nav>
         <ul class="flex space-x-4">
           <li><a href="#" style="color: #01F1B3; hover:opacity-80">Home</a></li>
-          <li><a href="#" style="color: #01F1B3; hover:opacity-80">About</a></li>
         </ul>
       </nav>
     </div>
   </div>
 </header>
+

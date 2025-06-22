@@ -59,8 +59,9 @@ export async function runCode() {
 
     const json_res = await response.json();
     console.log("RESULT: ", json_res);
-    stderr.set(b64ToString(json_res.results.stdout));
-    stdout.set(b64ToString(json_res.results.stderr));
+    stderr.set(b64ToString(json_res.results.stderr));
+    stdout.set(b64ToString(json_res.results.stdout));
+    exitStatus.set(json_res.results.exit_status)
 
   } catch (error) {
     console.log('Error running config: ', error)
