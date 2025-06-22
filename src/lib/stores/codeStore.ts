@@ -1,37 +1,72 @@
 import { writable } from 'svelte/store';
+import { get } from 'svelte/store';
 
-// Create stores for all state values
-export const code = writable('// Your code here\nconsole.log("Hello, Gazbolt!");');
+// Program State
+export const code = writable('');
 export const stdout = writable('');
 export const stderr = writable('');
 export const stdin = writable('');
+export const exitStatus = writable(0);
 
-// Configuration options
-export const selectedConfig = writable('Default');
-export const selectedToolchain = writable('TypeScript');
-export const selectedProgram = writable('Main');
+export const selectedConfig = writable(Object());
+export const selectedToolchain = writable(Object());
+export const selectedProgram = writable(Object());
 
-// Function to run the code
-export function runCode() {
-  const configValue = get(selectedConfig);
-  const toolchainValue = get(selectedToolchain);
-  const programValue = get(selectedProgram);
-  const codeValue = get(code);
-  const stdinValue = get(stdin);
-  
-  // Mock implementation - in a real app you'd send this to a backend
-  let output = `Running ${programValue} with ${toolchainValue} (${configValue})...\n`;
-  
-  try {
-    output += `Output from execution:\n${codeValue}\n\nStdin provided:\n${stdinValue || "None"}`;
-    stdout.set(output);
-    stderr.set('');
-  } catch (error) {
-    stderr.set(`Error: ${error}`);
-  }
+// Todo: move to utils.
+export function stringToB64(str: string): string {
+ try {
+   return btoa(str);
+ } catch (error) {
+   console.error('Base64 encoding failed:', error);
+   return 'Unable to encode string to base64.';
+ }
 }
 
-// Function to clear all outputs
+export function b64ToString(b64: string): string {
+ try {
+   return atob(b64);
+ } catch (error) {
+   console.error('Base64 decoding failed:', error);
+   return 'Unable to decode base64 to string.';
+ }
+}
+
+// Run the current code on selected config and toolchain.
+export async function runCode() {
+  const configValue     = get(selectedConfig);
+  const toolchain  = get(selectedToolchain);
+
+  try {
+    const base = 'http://127.0.0.1:5001';
+    const url = new URL(`/config/${configValue.name}/run`, base).toString();    
+    
+    const payload = {
+        'test_contents':  stringToB64(get(code)),
+        'toolchain_name': Object.keys(toolchain)[0],
+        'stdin':          stringToB64(get(stdin))
+    };
+    console.log("TC:", toolchain);
+    console.log("REQUEST PAYLOAD: ", payload);
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const json_res = await response.json();
+    console.log("RESULT: ", json_res);
+    stderr.set(b64ToString(json_res.results.stdout));
+    stdout.set(b64ToString(json_res.results.stderr));
+
+  } catch (error) {
+    console.log('Error running config: ', error)
+  } 
+}
+
 export function clearOutputs() {
   code.set('');
   stdin.set('');
@@ -39,5 +74,4 @@ export function clearOutputs() {
   stderr.set('');
 }
 
-// Import get to access store values directly in functions
-import { get } from 'svelte/store';
+
