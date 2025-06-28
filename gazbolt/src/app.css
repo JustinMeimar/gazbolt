@@ -29,3 +29,28 @@
 .cm-content {
   padding: 12px !important;
 }
+
+/* Custom scrollbar styling to match site theme */
+.cm-scroller::-webkit-scrollbar {
+  width: 12px !important;
+  height: 12px !important;
+}
+
+.cm-scroller::-webkit-scrollbar-track {
+  background: #1a1a1a !important;
+  border-radius: 6px !important;
+}
+
+.cm-scroller::-webkit-scrollbar-thumb {
+  background: #333 !important;
+  border-radius: 6px !important;
+  border: 2px solid #1a1a1a !important;
+}
+
+.cm-scroller::-webkit-scrollbar-thumb:hover {
+  background: #01F1B3 !important;
+}
+
+.cm-scroller::-webkit-scrollbar-corner {
+  background: #1a1a1a !important;
+}

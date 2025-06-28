@@ -26,7 +26,7 @@
     <div class="flex space-x-2">
       <button 
         on:click={runCode}
-        class="py-2 px-4 flex items-center transition-all duration-200 cursor-pointer rounded-md font-medium"
+        class="py-2 px-4 my-3 flex items-center transition-all duration-200 cursor-pointer rounded-md font-medium"
         style="background-color: #01F1B3; color: #131312;"
         on:mouseenter={(e) => e.target.style.backgroundColor = '#00d49e'}
         on:mouseleave={(e) => e.target.style.backgroundColor = '#01F1B3'}
@@ -35,12 +35,12 @@
       </button>
       <button 
         on:click={clearOutputs}
-        class="py-2 px-4 flex items-center transition-all duration-200 cursor-pointer rounded-md font-medium"
+        class="py-2 px-2 my-3 mx-2 mr-5 flex items-center transition-all duration-200 cursor-pointer rounded-md font-medium"
         style="background-color: #222020; color: #01F1B3; border: 1px solid #01F1B3;"
         on:mouseenter={(e) => {e.target.style.backgroundColor = '#2a2a28'; e.target.style.borderColor = '#00d49e'; e.target.style.color = '#00d49e';}}
         on:mouseleave={(e) => {e.target.style.backgroundColor = '#222020'; e.target.style.borderColor = '#01F1B3'; e.target.style.color = '#01F1B3';}}
       >
-        <img src="clear-icon.png" alt="Clear" class="h-5 w-5 mr-1" />
+        <img src="clear-icon.png" alt="Clear" class="h-3 w-3 mr-1" />
         Clear
       </button>
       <label class="flex items-center gap-2 text-xs cursor-pointer" style="color: #01F1B3;">
