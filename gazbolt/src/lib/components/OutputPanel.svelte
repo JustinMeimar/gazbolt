@@ -44,6 +44,9 @@
     return true;
   }
   $: displayContent = showRaw ? toRawBytes(content) : content;
+  
+  // Calculate byte length of the content
+  $: byteLength = new TextEncoder().encode(content || "").length;
 </script>
 
 <div style="background-color: #222020;
@@ -70,7 +73,7 @@
   
   <div class="flex-grow flex flex-col overflow-hidden" style="min-height: 0;">
     <div class="text-xs py-1 px-3 border-b border-gray-700" style="background-color: #1e1e1e; color: #888;">
-      Bytes: 1
+      Bytes: {byteLength}
       {panelType == "stderr" ? `Exit Status: ${$exitStatus}` : "None" }
     </div>
     {#if isInput}
