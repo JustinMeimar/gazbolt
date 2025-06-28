@@ -7,6 +7,7 @@ export const stdout = writable('');
 export const stderr = writable('');
 export const stdin = writable('');
 export const exitStatus = writable(0);
+export const hideStdin = writable(true);
 
 export const selectedConfig = writable(Object());
 export const selectedToolchain = writable(Object());

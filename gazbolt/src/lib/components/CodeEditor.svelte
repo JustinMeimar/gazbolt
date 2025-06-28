@@ -1,6 +1,6 @@
 <script>
   import Controls from './Controls.svelte';
-  import { code, selectedToolchain, runCode, clearOutputs } from '$lib/stores/codeStore';
+  import { code, selectedToolchain, runCode, clearOutputs, hideStdin } from '$lib/stores/codeStore';
   import CodeMirror from "svelte-codemirror-editor";
   import { javascript } from "@codemirror/lang-javascript";
   import { oneDark } from "@codemirror/theme-one-dark";
@@ -39,6 +39,14 @@
         <img src="clear-icon.png" alt="Clear" class="h-5 w-5 mr-1" />
         Clear
       </button>
+      <label class="flex items-center gap-2 text-xs cursor-pointer" style="color: #01F1B3;">
+        <input
+          type="checkbox"
+          bind:checked={$hideStdin}
+          class="w-3 h-3"
+        />
+        Hide stdin
+      </label>
     </div>
   </div>
   

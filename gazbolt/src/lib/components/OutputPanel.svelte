@@ -61,14 +61,14 @@
     <h3 class="text-base font-medium" style="color: #01F1B3;">
       {title}
     </h3>
-    <label class="flex items-center gap-2 text-xs cursor-pointer" style="color: #01F1B3;">
-      <input
-        type="checkbox"
-        bind:checked={showRaw}
-        class="w-3 h-3"
-      />
-      Raw
-    </label>
+      <label class="flex items-center gap-2 text-xs cursor-pointer" style="color: #01F1B3;">
+        <input
+          type="checkbox"
+          bind:checked={showRaw}
+          class="w-3 h-3"
+        />
+        Raw
+      </label>
   </div>
   
   <div class="flex-grow flex flex-col overflow-hidden" style="min-height: 0;">
