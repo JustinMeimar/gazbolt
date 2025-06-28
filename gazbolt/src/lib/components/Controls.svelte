@@ -62,8 +62,12 @@
     <select 
       id="config" 
       bind:value={$selectedConfig}
-      class="block w-full rounded-md shadow-sm text-sm"
+      class="block w-full rounded-md shadow-sm text-sm transition-all duration-200 cursor-pointer"
       style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.5rem 0.75rem;"
+      on:mouseenter={(e) => e.target.style.borderColor = '#01F1B3'}
+      on:mouseleave={(e) => e.target.style.borderColor = '#444'}
+      on:focus={(e) => e.target.style.borderColor = '#01F1B3'}
+      on:blur={(e) => e.target.style.borderColor = '#444'}
     >
       {#each configs as config}
         <option value={config}>{config.name.toString()}</option>
@@ -73,14 +77,18 @@
   
   <!-- Toolchain Dropdown -->
   <div>
-    <label for="toolchain" class="block text-base font-medium mb-2" style="color: #222020;">
+    <label for="toolchain" class="block text-base font-medium mb-2" style="color: #01F1B3;">
       Toolchain
     </label>
     <select 
       id="toolchain" 
       bind:value={$selectedToolchain}
-      class="block w-full rounded-md shadow-sm text-sm"
+      class="block w-full rounded-md shadow-sm text-sm transition-all duration-200 cursor-pointer"
       style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.5rem 0.75rem;"
+      on:mouseenter={(e) => e.target.style.borderColor = '#01F1B3'}
+      on:mouseleave={(e) => e.target.style.borderColor = '#444'}
+      on:focus={(e) => e.target.style.borderColor = '#01F1B3'}
+      on:blur={(e) => e.target.style.borderColor = '#444'}
     >
       {#each toolchains as tc}
         <option value={tc}>{Object.keys(tc)[0]}</option>
@@ -94,8 +102,12 @@
     <select 
       id="program" 
       bind:value={$selectedProgram}
-      class="block w-full rounded-md shadow-sm text-sm"
+      class="block w-full rounded-md shadow-sm text-sm transition-all duration-200 cursor-pointer"
       style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.5rem 0.75rem;"
+      on:mouseenter={(e) => e.target.style.borderColor = '#01F1B3'}
+      on:mouseleave={(e) => e.target.style.borderColor = '#444'}
+      on:focus={(e) => e.target.style.borderColor = '#01F1B3'}
+      on:blur={(e) => e.target.style.borderColor = '#444'}
     >
       {#each programs as program}
         <option value={program}>{program.name}</option>
