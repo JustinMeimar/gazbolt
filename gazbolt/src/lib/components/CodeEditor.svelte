@@ -64,35 +64,17 @@
   <div style="background-color: #131312;
               flex: 1;
               overflow: hidden;
-              position: relative;">
-    <div style="position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;">
-        <textarea
-      bind:value={$code}
-      style="position: absolute;
-             top: 0;
-             left: 0;
-             right: 0;
-             bottom: 0;
-             width: 100%;
-             height: 100%;
-             background-color: #222020;
-             color: #ffffff;
-             border: none;
-             outline: none;
-             resize: none;
-             padding: 12px;
-             font-family: 'Fira Code', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
-             font-size: 14px;
-             line-height: 1.5;
-             tab-size: 2;
-             overflow: auto;"
-      placeholder="Enter your code here..."
-      spellcheck="false"
-    />
+              position: relative;
+              display: flex;
+              flex-direction: column;">
+    <div style="flex: 1; position: relative; min-height: 0;">
+      <CodeMirror
+        bind:value={$code}
+        extensions={[langExtension]}
+        theme={oneDark}
+        placeholder="Enter your code here..."
+        class="codemirror-container"
+      />
     </div>
   </div>
 </div>
