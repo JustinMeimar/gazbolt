@@ -30,6 +30,7 @@
 	"dependencies": {
 		"@codemirror/lang-javascript": "^6.2.3",
 		"@codemirror/theme-one-dark": "^6.1.2",
+		"@uiw/codemirror-theme-material": "^4.23.14",
 		"svelte-codemirror-editor": "^1.4.1"
 	}
 }
