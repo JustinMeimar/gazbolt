@@ -10,29 +10,30 @@
 </script>
 <div id="editor-wrapper"
      style="background-color: #222020;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border: none;
+            border-right: 1px solid #333;
             height: 100%;
             display: flex;
             flex-direction: column;
-            overflow: hidden;">
+            overflow: hidden;
+            border-radius: 0;">
   
   <!-- Controls section -->
-  <div class="p-4 border-b" style="border-color: #444;">
+  <div class="px-3 py-2 border-b border-gray-600" style="background-color: #1a1a1a;">
     <Controls />
     
     <!-- Action Buttons -->
     <div class="flex space-x-2">
       <button 
         on:click={runCode}
-        class="py-2 px-4 rounded-md flex items-center"
+        class="py-2 px-4 flex items-center"
         style="background-color: #01F1B3; color: #131312; hover:opacity-90;"
       >
         Run
       </button>
       <button 
         on:click={clearOutputs}
-        class="py-2 px-4 rounded-md flex items-center"
+        class="py-2 px-4 flex items-center"
         style="background-color: #222020; color: #01F1B3; border: 1px solid #01F1B3; hover:opacity-90;"
       >
         <img src="clear-icon.png" alt="Clear" class="h-5 w-5 mr-1" />
@@ -42,8 +43,8 @@
   </div>
   
   <!-- Code Editor Header -->
-  <div class="text-xs py-1 px-3 flex justify-between"
-       style="background-color: #131312; color: #01F1B3;">
+  <div class="text-xs py-1 px-3 flex justify-between border-b border-gray-700"
+       style="background-color: #1e1e1e; color: #888;">
     <span>Editor</span>
     <span>{$selectedToolchain}</span>
   </div>
