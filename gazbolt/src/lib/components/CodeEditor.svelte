@@ -100,7 +100,6 @@
   <div class="text-xs py-1 px-3 flex justify-between border-b border-gray-700"
        style="background-color: #1e1e1e; color: #888;">
     <span>Editor</span>
-    <span>{$selectedToolchain}</span>
   </div>
   
   <div style="background-color: #131312;

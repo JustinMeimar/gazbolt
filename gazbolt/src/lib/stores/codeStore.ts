@@ -3,21 +3,19 @@ import { get } from 'svelte/store';
 import { getBackendUrl } from '$lib/config';
 
 // Program State
-export const code = writable('');
-export const stdout = writable('');
-export const stderr = writable('');
-export const stdin = writable('');
-export const exitStatus = writable(0);
-export const hideStdin = writable(true);
-
-export const selectedConfig = writable(Object());
-export const selectedToolchain = writable(Object());
-export const selectedProgram = writable(Object());
-
-export const isServerConnected = writable(false);
+export const code               = writable('');
+export const stdout             = writable('');
+export const stderr             = writable('');
+export const stdin              = writable('');
+export const exitStatus         = writable(0);
+export const hideStdin          = writable(true);
+export const selectedConfig     = writable(Object());
+export const selectedToolchain  = writable(Object());
+export const selectedProgram    = writable(Object());
+export const isServerConnected  = writable(false);
 
 // Check if the backend server is reachable
-export async function checkServerConnection(): boolean {
+export async function checkServerConnection(): Promise<boolean> {
   try {
     const backendUrl = getBackendUrl();
     const response = await fetch(`${backendUrl}`, { 
@@ -74,8 +72,6 @@ export async function runCode() {
         'toolchain_name': Object.keys(toolchain)[0],
         'stdin':          stringToB64(get(stdin))
     };
-    console.log("TC:", toolchain);
-    console.log("REQUEST PAYLOAD: ", payload);
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -85,9 +81,7 @@ export async function runCode() {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
     const json_res = await response.json();
-    console.log("RESULT: ", json_res);
     stderr.set(b64ToString(json_res.results.stderr));
     stdout.set(b64ToString(json_res.results.stdout));
     exitStatus.set(json_res.results.exit_status)

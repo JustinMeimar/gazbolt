@@ -14,12 +14,7 @@
       <div class="flex items-center">
         <img src="/logo.png" alt="Gazbolt Logo" class="h-8 w-8 mr-2" />
         <h1 class="text-2xl font-bold" style="color: #01F1B3;">Gazbolt</h1>
-      </div>
-      <nav>
-        <ul class="flex space-x-4">
-          <li><a href="#" style="color: #01F1B3; hover:opacity-80">Home</a></li>
-        </ul>
-      </nav>
+      </div>   
     </div> 
   </div>
 </header>
