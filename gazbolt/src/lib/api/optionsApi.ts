@@ -1,10 +1,5 @@
 import { get } from 'svelte/store';
-
-// Get backend URI from environment variables
-const getBackendUri = () => {
-  return import.meta.env.BACKEND_URI || 'http://127.0.0.1:5001';
-};
-
+import { getBackendUrl } from '$lib/config';
 import { selectedConfig, checkServerConnection } from '$lib/stores/codeStore';
 
 export async function fetchConfigs() {
@@ -15,8 +10,8 @@ export async function fetchConfigs() {
   }
 
   try {
-    const backendUri = getBackendUri();
-    const configsResponse = await fetch(`${backendUri}/configs`);
+    const backendUrl = getBackendUrl();
+    const configsResponse = await fetch(`${backendUrl}/configs`);
     return await configsResponse.json();
   } catch (error) {
     console.error('Failed to fetch options from API:', error);
@@ -32,8 +27,8 @@ export async function fetchToolChains(configName: string) {
   }
 
   try {
-    const backendUri = getBackendUri();
-    const toolchainsResponse = await fetch(`${backendUri}/config/${configName}/toolchains`);
+    const backendUrl = getBackendUrl();
+    const toolchainsResponse = await fetch(`${backendUrl}/config/${configName}/toolchains`);
     return await toolchainsResponse.json();
   } catch (error) {
     console.error('Failed to fetch options from API:', error);
@@ -49,8 +44,8 @@ export async function fetchTests(configName: string) {
   }
 
   try {
-    const backendUri = getBackendUri();
-    const toolchainsResponse = await fetch(`${backendUri}/config/${configName}/tests`);
+    const backendUrl = getBackendUrl();
+    const toolchainsResponse = await fetch(`${backendUrl}/config/${configName}/tests`);
     return await toolchainsResponse.json();
   } catch (error) {
     console.error('Failed to fetch options from API:', error);

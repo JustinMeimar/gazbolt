@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { get } from 'svelte/store';
+import { getBackendUrl } from '$lib/config';
 
 // Program State
 export const code = writable('');
@@ -18,8 +19,8 @@ export const isServerConnected = writable(false);
 // Check if the backend server is reachable
 export async function checkServerConnection(): boolean {
   try {
-    const base = 'http://127.0.0.1:5001';
-    const response = await fetch(`${base}`, { 
+    const backendUrl = getBackendUrl();
+    const response = await fetch(`${backendUrl}`, { 
       method: 'GET',
       signal: AbortSignal.timeout(5000)
     });
@@ -65,8 +66,8 @@ export async function runCode() {
   }
 
   try {
-    const base = 'http://127.0.0.1:5001';
-    const url = new URL(`/config/${configValue.name}/run`, base).toString();    
+    const backendUrl = getBackendUrl();
+    const url = new URL(`/config/${configValue.name}/run`, backendUrl).toString();    
     
     const payload = {
         'test_contents':  stringToB64(get(code)),
