@@ -3,7 +3,7 @@
   import { fetchConfigs, fetchToolChains, fetchTests } from '../api/optionsApi';
   import { selectedConfig, selectedToolchain, selectedProgram, code,
           stdout, stderr, stdin, exitStatus, clearOutputs,
-          stringToB64, b64ToString, hideStdin } from '$lib/stores/codeStore';
+          stringToB64, b64ToString, hideStdin, checkServerConnection } from '$lib/stores/codeStore';
 
   // Options for dropdowns
   export let configs = [];
@@ -12,6 +12,12 @@
 
   // Initialize options on component mount
   onMount(async () => {
+
+    // Check server connection before proceeding
+    const connected = await checkServerConnection();
+    if (!connected) {
+      return;
+    }
     try {
       configs = await fetchConfigs(); 
       const configName = configs[0].name.toString();
@@ -61,11 +67,7 @@
       bind:value={$selectedConfig}
       class="w-full rounded text-xs transition-all duration-200 cursor-pointer"
       style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.375rem 0.5rem;"
-      on:mouseenter={(e) => e.target.style.borderColor = '#01F1B3'}
-      on:mouseleave={(e) => e.target.style.borderColor = '#444'}
-      on:focus={(e) => e.target.style.borderColor = '#01F1B3'}
-      on:blur={(e) => e.target.style.borderColor = '#444'}
-    >
+       >
       {#each configs as config}
         <option value={config}>{config.name.toString()}</option>
       {/each}

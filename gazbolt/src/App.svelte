@@ -3,11 +3,18 @@
   import Footer from './components/Footer.svelte';
   import CodeEditor from './components/CodeEditor.svelte';
   import OutputPanel from './components/OutputPanel.svelte';
-  import { code, stdout, stderr, stdin } from './stores/codeStore';
+  import { code, stdout, stderr, stdin, checkServerConnection, isServerConnected } from './stores/codeStore';
 </script>
 
 <main class="flex flex-col h-screen" style="background-color: #131312;">
   <Header />
+
+  <!-- Connection warning banner -->
+  <!-- {#if !$isServerConnected} -->
+    <div class="bg-red-600 text-white px-4 py-2 text-center text-sm fixed top-0 left-0 w-full z-50">
+      ⚠️ Server is unreachable. Some features may not work properly.
+    </div>
+  <!-- {/if} -->
 
   <!-- Main content - Fill all available space between header and footer -->
   <div class="flex flex-col flex-grow overflow-hidden">

@@ -5,9 +5,15 @@ const getBackendUri = () => {
   return import.meta.env.BACKEND_URI || 'http://127.0.0.1:5001';
 };
 
-import { selectedConfig } from '$lib/stores/codeStore';
+import { selectedConfig, checkServerConnection } from '$lib/stores/codeStore';
 
 export async function fetchConfigs() {
+  const connected = await checkServerConnection();
+  if (!connected) {
+    console.log('Cannot fetch configs: server is unreachable');
+    return [];
+  }
+
   try {
     const backendUri = getBackendUri();
     const configsResponse = await fetch(`${backendUri}/configs`);
@@ -19,6 +25,12 @@ export async function fetchConfigs() {
 }
 
 export async function fetchToolChains(configName: string) {
+  const connected = await checkServerConnection();
+  if (!connected) {
+    console.log('Cannot fetch toolchains: server is unreachable');
+    return [];
+  }
+
   try {
     const backendUri = getBackendUri();
     const toolchainsResponse = await fetch(`${backendUri}/config/${configName}/toolchains`);
@@ -30,6 +42,12 @@ export async function fetchToolChains(configName: string) {
 }
 
 export async function fetchTests(configName: string) {
+  const connected = await checkServerConnection();
+  if (!connected) {
+    console.log('Cannot fetch tests: server is unreachable');
+    return [];
+  }
+
   try {
     const backendUri = getBackendUri();
     const toolchainsResponse = await fetch(`${backendUri}/config/${configName}/tests`);

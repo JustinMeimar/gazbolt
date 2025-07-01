@@ -13,6 +13,26 @@ export const selectedConfig = writable(Object());
 export const selectedToolchain = writable(Object());
 export const selectedProgram = writable(Object());
 
+export const isServerConnected = writable(false);
+
+// Check if the backend server is reachable
+export async function checkServerConnection(): boolean {
+  try {
+    const base = 'http://127.0.0.1:5001';
+    const response = await fetch(`${base}`, { 
+      method: 'GET',
+      signal: AbortSignal.timeout(5000)
+    });
+    const connected = response.ok;
+    isServerConnected.set(connected);
+    return connected;
+  } catch (error) {
+    console.log('Server connection check failed:', error);
+    isServerConnected.set(false);
+    return false;
+  }
+}
+
 // Todo: move to utils.
 export function stringToB64(str: string): string {
  try {
@@ -36,6 +56,13 @@ export function b64ToString(b64: string): string {
 export async function runCode() {
   const configValue     = get(selectedConfig);
   const toolchain  = get(selectedToolchain);
+
+  // Check server connection before proceeding
+  const connected = await checkServerConnection();
+  if (!connected) {
+    console.log('Cannot run code: server is unreachable');
+    return;
+  }
 
   try {
     const base = 'http://127.0.0.1:5001';
