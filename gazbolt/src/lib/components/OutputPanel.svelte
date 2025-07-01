@@ -47,6 +47,14 @@
   
   // Calculate byte length of the content
   $: byteLength = new TextEncoder().encode(content || "").length;
+  
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(displayContent);
+    } catch (err) {
+      console.error('Failed to copy to clipboard:', err);
+    }
+  };
 </script>
 
 <div style="background-color: #222020;
@@ -61,6 +69,17 @@
     <h3 class="text-base font-medium" style="color: #01F1B3;">
       {title}
     </h3>
+    <div class="flex items-center gap-3">
+      <button
+        on:click={copyToClipboard}
+        class="p-1 hover:bg-gray-700 rounded transition-colors"
+        title="Copy to clipboard"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#01F1B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+      </button>
       <label class="flex items-center gap-2 text-xs cursor-pointer" style="color: #01F1B3;">
         <input
           type="checkbox"
@@ -69,6 +88,7 @@
         />
         Raw
       </label>
+    </div>
   </div>
   
   <div class="flex-grow flex flex-col overflow-hidden" style="min-height: 0;">
