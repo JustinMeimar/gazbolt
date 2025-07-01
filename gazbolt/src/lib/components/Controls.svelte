@@ -2,8 +2,8 @@
   import { onMount } from 'svelte';
   import { fetchConfigs, fetchToolChains, fetchTests } from '../api/optionsApi';
   import { selectedConfig, selectedToolchain, selectedProgram, code,
-          stdout, stderr, stdin, exitStatus, clearOutputs,
-          stringToB64, b64ToString, hideStdin, checkServerConnection } from '$lib/stores/codeStore';
+           stdout, stderr, stdin, exitStatus, clearOutputs, runCode,
+           stringToB64, b64ToString, hideStdin, checkServerConnection } from '$lib/stores/codeStore';
 
   // Options for dropdowns
   export let configs = [];
