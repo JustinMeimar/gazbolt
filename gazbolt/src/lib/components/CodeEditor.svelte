@@ -38,7 +38,7 @@
   const gazboltTheme = EditorView.theme({
     "&": {
       color: "#ffffff",
-      backgroundColor: "#131312", // Match output panels background
+      backgroundColor: "#131312",
     },
     ".cm-content": {
       padding: "12px",
@@ -93,38 +93,7 @@
   
   <!-- Controls section -->
   <div class="px-3 py-2 border-b border-gray-600" style="background-color: #1a1a1a;">
-    <Controls />
-    
-    <!-- Action Buttons -->
-    <div class="flex space-x-2">
-      <button 
-        on:click={runCode}
-        class="py-2 px-4 my-3 flex items-center transition-all duration-200 cursor-pointer rounded-md font-medium"
-        style="background-color: #01F1B3; color: #131312;"
-        on:mouseenter={(e) => e.target.style.backgroundColor = '#00d49e'}
-        on:mouseleave={(e) => e.target.style.backgroundColor = '#01F1B3'}
-      >
-        Run
-      </button>
-      <button 
-        on:click={clearOutputs}
-        class="py-2 px-2 my-3 mx-2 mr-5 flex items-center transition-all duration-200 cursor-pointer rounded-md font-medium"
-        style="background-color: #222020; color: #01F1B3; border: 1px solid #01F1B3;"
-        on:mouseenter={(e) => {e.target.style.backgroundColor = '#2a2a28'; e.target.style.borderColor = '#00d49e'; e.target.style.color = '#00d49e';}}
-        on:mouseleave={(e) => {e.target.style.backgroundColor = '#222020'; e.target.style.borderColor = '#01F1B3'; e.target.style.color = '#01F1B3';}}
-      >
-        <img src="clear-icon.png" alt="Clear" class="h-3 w-3 mr-1" />
-        Clear
-      </button>
-      <label class="flex items-center gap-2 text-xs cursor-pointer" style="color: #01F1B3;">
-        <input
-          type="checkbox"
-          bind:checked={$hideStdin}
-          class="w-3 h-3"
-        />
-        Hide stdin
-      </label>
-    </div>
+    <Controls /> 
   </div>
   
   <!-- Code Editor Header -->

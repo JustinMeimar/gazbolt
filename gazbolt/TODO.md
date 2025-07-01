@@ -1,9 +1,9 @@
 
 
 -[] Fix stdin not completely hiding bug.
--[] Add copy contents buttons to the output pannels.
+-[x] Add copy contents buttons to the output pannels.
 -[] Add Warning when fetch to backend fails.
--[] Condense control pannel into "one row" so editor takes up more space.
+-[x] Condense control pannel into "one row" so editor takes up more space.
 -[] Create a light mode for accessibility.
 -[] Source the backend URL in a production quality way
 -[] Add a small about section and make the existing home and logo clickable

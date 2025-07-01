@@ -3,7 +3,7 @@
   import { fetchConfigs, fetchToolChains, fetchTests } from '../api/optionsApi';
   import { selectedConfig, selectedToolchain, selectedProgram, code,
           stdout, stderr, stdin, exitStatus, clearOutputs,
-          stringToB64, b64ToString } from '$lib/stores/codeStore';
+          stringToB64, b64ToString, hideStdin } from '$lib/stores/codeStore';
 
   // Options for dropdowns
   export let configs = [];
@@ -22,9 +22,6 @@
       $selectedProgram = programs[0];
       $selectedConfig = configs[0];
 
-      console.log("CONFIGS: ", configs);
-      console.log("TESTS: ", programs);
-      console.log("TC: ", toolchains);
     } catch (error) {
       console.error('Failed to fetch options:', error);
     }
@@ -53,17 +50,17 @@
   }
 </script>
 
-<div class="grid grid-cols-3 gap-4 mb-4">
+<div class="flex items-center gap-3 mb-3 p-2" style="background-color: #1a1a1a; border-radius: 6px;">
   <!-- Config Dropdown -->
-  <div>
-    <label for="config" class="block text-base font-medium mb-2" style="color: #01F1B3;">
+  <div class="flex flex-col min-w-0 flex-1">
+    <label for="config" class="text-xs font-medium mb-1" style="color: #01F1B3;">
       Config
     </label>
     <select 
       id="config" 
       bind:value={$selectedConfig}
-      class="block w-full rounded-md shadow-sm text-sm transition-all duration-200 cursor-pointer"
-      style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.5rem 0.75rem;"
+      class="w-full rounded text-xs transition-all duration-200 cursor-pointer"
+      style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.375rem 0.5rem;"
       on:mouseenter={(e) => e.target.style.borderColor = '#01F1B3'}
       on:mouseleave={(e) => e.target.style.borderColor = '#444'}
       on:focus={(e) => e.target.style.borderColor = '#01F1B3'}
@@ -76,15 +73,15 @@
   </div>
   
   <!-- Toolchain Dropdown -->
-  <div>
-    <label for="toolchain" class="block text-base font-medium mb-2" style="color: #01F1B3;">
+  <div class="flex flex-col min-w-0 flex-1">
+    <label for="toolchain" class="text-xs font-medium mb-1" style="color: #01F1B3;">
       Toolchain
     </label>
     <select 
       id="toolchain" 
       bind:value={$selectedToolchain}
-      class="block w-full rounded-md shadow-sm text-sm transition-all duration-200 cursor-pointer"
-      style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.5rem 0.75rem;"
+      class="w-full rounded text-xs transition-all duration-200 cursor-pointer"
+      style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.375rem 0.5rem;"
       on:mouseenter={(e) => e.target.style.borderColor = '#01F1B3'}
       on:mouseleave={(e) => e.target.style.borderColor = '#444'}
       on:focus={(e) => e.target.style.borderColor = '#01F1B3'}
@@ -97,13 +94,13 @@
   </div>
   
   <!-- Program Dropdown -->
-  <div>
-    <label for="program" class="block text-base font-medium mb-2" style="color: #01F1B3;">Program</label>
+  <div class="flex flex-col min-w-0 flex-1">
+    <label for="program" class="text-xs font-medium mb-1" style="color: #01F1B3;">Program</label>
     <select 
       id="program" 
       bind:value={$selectedProgram}
-      class="block w-full rounded-md shadow-sm text-sm transition-all duration-200 cursor-pointer"
-      style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.5rem 0.75rem;"
+      class="w-full rounded text-xs transition-all duration-200 cursor-pointer"
+      style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.375rem 0.5rem;"
       on:mouseenter={(e) => e.target.style.borderColor = '#01F1B3'}
       on:mouseleave={(e) => e.target.style.borderColor = '#444'}
       on:focus={(e) => e.target.style.borderColor = '#01F1B3'}
@@ -113,5 +110,36 @@
         <option value={program}>{program.name}</option>
       {/each}
     </select>
+  </div>
+ 
+  <!-- Action Buttons -->
+  <div class="flex items-center gap-2 ml-2 mt-4">
+    <button 
+      on:click={runCode}
+      class="px-3 py-1.5 text-sm font-medium rounded transition-all duration-200 cursor-pointer"
+      style="background-color: #01F1B3; color: #131312;"
+      on:mouseenter={(e) => e.target.style.backgroundColor = '#00d49e'}
+      on:mouseleave={(e) => e.target.style.backgroundColor = '#01F1B3'}
+    >
+      Run
+    </button>
+    <button 
+      on:click={clearOutputs}
+      class="px-2 py-1.5 text-sm font-medium rounded transition-all duration-200 cursor-pointer flex items-center"
+      style="background-color: #222020; color: #01F1B3; border: 1px solid #01F1B3;"
+      on:mouseenter={(e) => {e.target.style.backgroundColor = '#2a2a28'; e.target.style.borderColor = '#00d49e'; e.target.style.color = '#00d49e';}}
+      on:mouseleave={(e) => {e.target.style.backgroundColor = '#222020'; e.target.style.borderColor = '#01F1B3'; e.target.style.color = '#01F1B3';}}
+    >
+      <img src="clear-icon.png" alt="Clear" class="h-3 w-3 mr-1" />
+      Clear
+    </button>
+    <label class="flex items-center gap-1 text-xs cursor-pointer whitespace-nowrap" style="color: #01F1B3;">
+      <input
+        type="checkbox"
+        bind:checked={$hideStdin}
+        class="w-3 h-3"
+      />
+      stdin
+    </label>
   </div>
 </div>
