@@ -1,4 +1,5 @@
 node_modules
+**/build/
 
 # Output
 .output
@@ -24,3 +25,4 @@ vite.config.ts.timestamp-*
 
 **/TODO.md
 CLAUDE.md
+**/.svelte-kit
