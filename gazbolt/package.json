@@ -1,38 +1,40 @@
 {
-	"name": "gazbolt",
-	"version": "0.0.1",
-	"devDependencies": {
-		"@sveltejs/adapter-auto": "^6.0.0",
-		"@sveltejs/adapter-node": "^5.2.13",
-		"@sveltejs/adapter-static": "^3.0.8",
-		"@sveltejs/kit": "^2.16.0",
-		"@sveltejs/vite-plugin-svelte": "^5.0.0",
-		"@tailwindcss/vite": "^4.0.0",
-		"prettier": "^3.4.2",
-		"prettier-plugin-svelte": "^3.3.3",
-		"prettier-plugin-tailwindcss": "^0.6.11",
-		"svelte": "^5.0.0",
-		"svelte-check": "^4.0.0",
-		"tailwindcss": "^4.0.0",
-		"typescript": "^5.0.0",
-		"vite": "^6.2.6"
-	},
-	"private": true,
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"prepare": "svelte-kit sync || echo ''",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"format": "prettier --write .",
-		"lint": "prettier --check ."
-	},
-	"type": "module",
-	"dependencies": {
-		"@codemirror/lang-javascript": "^6.2.3",
-		"@codemirror/theme-one-dark": "^6.1.2",
-		"@uiw/codemirror-theme-material": "^4.23.14",
-		"svelte-codemirror-editor": "^1.4.1"
-	}
+  "name": "gazbolt",
+  "version": "0.0.1",
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "^6.0.0",
+    "@sveltejs/adapter-node": "^5.2.13",
+    "@sveltejs/adapter-static": "^3.0.8",
+    "@sveltejs/kit": "^2.16.0",
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-svelte": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "svelte": "^5.0.0",
+    "svelte-check": "^4.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^6.2.6"
+  },
+  "private": true,
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "build:production": "npm run check && npm run lint && vite build && npm run validate:build",
+    "preview": "vite preview",
+    "prepare": "svelte-kit sync || echo ''",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "format": "prettier --write .",
+    "lint": "prettier --check .",
+    "validate:build": "node -e \"const fs=require('fs'); const path='./build'; ['index.html','favicon.png','logo.png','clear-icon.png','run-icon.png'].forEach(f => { if(!fs.existsSync(path+'/'+f)) throw new Error('Missing: '+f); }); console.log('✓ Build validation passed');\""
+  },
+  "type": "module",
+  "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.3",
+    "@codemirror/theme-one-dark": "^6.1.2",
+    "@uiw/codemirror-theme-material": "^4.23.14",
+    "svelte-codemirror-editor": "^1.4.1"
+  }
 }

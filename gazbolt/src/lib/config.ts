@@ -1,13 +1,12 @@
-
 export function getBackendUrl(): string {
-   
   if (import.meta.env.VITE_BACKEND_URI || import.meta.env.BACKEND_URI) {
+    console.log("PORT: ", import.meta.env.VITE_BACKEND_URI);
     return import.meta.env.VITE_BACKEND_URI || import.meta.env.BACKEND_URI;
-  } 
+  }
   const port = import.meta.env.VITE_PORT || import.meta.env.PORT;
+  console.log("PORT: ", port);
   if (port) {
     return `http://127.0.0.1:${port}`;
   }
-  return 'http://127.0.0.1:5001';
+  return "http://127.0.0.1:5001";
 }
-

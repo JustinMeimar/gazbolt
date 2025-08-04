@@ -84,10 +84,10 @@
       bind:value={$selectedToolchain}
       class="w-full rounded text-xs transition-all duration-200 cursor-pointer"
       style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.375rem 0.5rem;"
-      on:mouseenter={(e) => e.target.style.borderColor = '#01F1B3'}
-      on:mouseleave={(e) => e.target.style.borderColor = '#444'}
-      on:focus={(e) => e.target.style.borderColor = '#01F1B3'}
-      on:blur={(e) => e.target.style.borderColor = '#444'}
+      on:mouseenter={(e) => {e.target.style.borderColor = '#01F1B3'}}
+      on:mouseleave={(e) => {e.target.style.borderColor = '#444'}}
+      on:focus={(e) => {e.target.style.borderColor = '#01F1B3'}}
+      on:blur={(e) => {e.target.style.borderColor = '#444'}}
     >
       {#each toolchains as tc}
         <option value={tc}>{Object.keys(tc)[0]}</option>
@@ -103,10 +103,10 @@
       bind:value={$selectedProgram}
       class="w-full rounded text-xs transition-all duration-200 cursor-pointer"
       style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.375rem 0.5rem;"
-      on:mouseenter={(e) => e.target.style.borderColor = '#01F1B3'}
-      on:mouseleave={(e) => e.target.style.borderColor = '#444'}
-      on:focus={(e) => e.target.style.borderColor = '#01F1B3'}
-      on:blur={(e) => e.target.style.borderColor = '#444'}
+      on:mouseenter={(e) => {e.target.style.borderColor = '#01F1B3'}}
+      on:mouseleave={(e) => {e.target.style.borderColor = '#444'}}
+      on:focus={(e) => {e.target.style.borderColor = '#01F1B3'}}
+      on:blur={(e) => {e.target.style.borderColor = '#444'}}
     >
       {#each programs as program}
         <option value={program}>{program.name}</option>
@@ -120,8 +120,8 @@
       on:click={runCode}
       class="px-3 py-1.5 text-sm font-medium rounded transition-all duration-200 cursor-pointer"
       style="background-color: #01F1B3; color: #131312;"
-      on:mouseenter={(e) => e.target.style.backgroundColor = '#00d49e'}
-      on:mouseleave={(e) => e.target.style.backgroundColor = '#01F1B3'}
+      on:mouseenter={(e) => {e.target.style.backgroundColor = '#00d49e'}}
+      on:mouseleave={(e) => {e.target.style.backgroundColor = '#01F1B3'}}
     >
       Run
     </button>
