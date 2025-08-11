@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
   import { fetchConfigs, fetchToolChains, fetchTests } from '../api/optionsApi';
   import { selectedConfig, selectedToolchain, selectedProgram, code,
@@ -6,9 +6,9 @@
            stringToB64, b64ToString, hideStdin, checkServerConnection } from '$lib/stores/codeStore';
 
   // Options for dropdowns
-  export let configs = [];
-  export let toolchains = [];
-  export let programs = [];
+  export let configs: any[] = [];
+  export let toolchains: any[] = [];
+  export let programs: any[] = [];
 
   // Initialize options on component mount
   onMount(async () => {
@@ -43,7 +43,7 @@
     code.set(decodedContent);
   } 
 
-  async function updateDependentDropdowns(configName) {
+  async function updateDependentDropdowns(configName: string) {
     try {
       toolchains = await fetchToolChains(configName);
       programs = await fetchTests(configName);
@@ -84,10 +84,10 @@
       bind:value={$selectedToolchain}
       class="w-full rounded text-xs transition-all duration-200 cursor-pointer"
       style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.375rem 0.5rem;"
-      on:mouseenter={(e) => {e.target.style.borderColor = '#01F1B3'}}
-      on:mouseleave={(e) => {e.target.style.borderColor = '#444'}}
-      on:focus={(e) => {e.target.style.borderColor = '#01F1B3'}}
-      on:blur={(e) => {e.target.style.borderColor = '#444'}}
+      on:mouseenter={(e) => {(e.target as HTMLElement).style.borderColor = '#01F1B3'}}
+      on:mouseleave={(e) => {(e.target as HTMLElement).style.borderColor = '#444'}}
+      on:focus={(e) => {(e.target as HTMLElement).style.borderColor = '#01F1B3'}}
+      on:blur={(e) => {(e.target as HTMLElement).style.borderColor = '#444'}}
     >
       {#each toolchains as tc}
         <option value={tc}>{Object.keys(tc)[0]}</option>
@@ -103,10 +103,10 @@
       bind:value={$selectedProgram}
       class="w-full rounded text-xs transition-all duration-200 cursor-pointer"
       style="background-color: #131312; color: white; border: 1px solid #444; padding: 0.375rem 0.5rem;"
-      on:mouseenter={(e) => {e.target.style.borderColor = '#01F1B3'}}
-      on:mouseleave={(e) => {e.target.style.borderColor = '#444'}}
-      on:focus={(e) => {e.target.style.borderColor = '#01F1B3'}}
-      on:blur={(e) => {e.target.style.borderColor = '#444'}}
+      on:mouseenter={(e) => {(e.target as HTMLElement).style.borderColor = '#01F1B3'}}
+      on:mouseleave={(e) => {(e.target as HTMLElement).style.borderColor = '#444'}}
+      on:focus={(e) => {(e.target as HTMLElement).style.borderColor = '#01F1B3'}}
+      on:blur={(e) => {(e.target as HTMLElement).style.borderColor = '#444'}}
     >
       {#each programs as program}
         <option value={program}>{program.name}</option>
@@ -120,8 +120,8 @@
       on:click={runCode}
       class="px-3 py-1.5 text-sm font-medium rounded transition-all duration-200 cursor-pointer"
       style="background-color: #01F1B3; color: #131312;"
-      on:mouseenter={(e) => {e.target.style.backgroundColor = '#00d49e'}}
-      on:mouseleave={(e) => {e.target.style.backgroundColor = '#01F1B3'}}
+      on:mouseenter={(e) => {(e.target as HTMLElement).style.backgroundColor = '#00d49e'}}
+      on:mouseleave={(e) => {(e.target as HTMLElement).style.backgroundColor = '#01F1B3'}}
     >
       Run
     </button>
@@ -129,8 +129,8 @@
       on:click={clearOutputs}
       class="px-2 py-1.5 text-sm font-medium rounded transition-all duration-200 cursor-pointer flex items-center"
       style="background-color: #222020; color: #01F1B3; border: 1px solid #01F1B3;"
-      on:mouseenter={(e) => {e.target.style.backgroundColor = '#2a2a28'; e.target.style.borderColor = '#00d49e'; e.target.style.color = '#00d49e';}}
-      on:mouseleave={(e) => {e.target.style.backgroundColor = '#222020'; e.target.style.borderColor = '#01F1B3'; e.target.style.color = '#01F1B3';}}
+      on:mouseenter={(e) => {const el = (e.target as HTMLElement); el.style.backgroundColor = '#2a2a28'; el.style.borderColor = '#00d49e'; el.style.color = '#00d49e';}}
+      on:mouseleave={(e) => {const el = (e.target as HTMLElement); el.style.backgroundColor = '#222020'; el.style.borderColor = '#01F1B3'; el.style.color = '#01F1B3';}}
     >
       <img src="clear-icon.png" alt="Clear" class="h-3 w-3 mr-1" />
       Clear

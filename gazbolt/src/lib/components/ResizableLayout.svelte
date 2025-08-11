@@ -1,20 +1,20 @@
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
   
-  export let rightPanels = [];
+  export let rightPanels: any[] = [];
   
-  let containerRef;
+  let containerRef: HTMLElement;
   let isDragging = false;
   let dragType = '';
   let startY = 0;
   let startX = 0;
-  let initialSizes = {};
+  let initialSizes: any = {};
   
   // Default sizes
   let leftPaneWidth = 50; // percentage
   let rightPanelHeights = [33.33, 33.33, 33.34]; // percentages
   
-  function startDrag(event, type) {
+  function startDrag(event: MouseEvent, type: string) {
     isDragging = true;
     dragType = type;
     
@@ -29,17 +29,17 @@
     event.preventDefault();
   }
   
-  function handleMouseMove(event) {
+  function handleMouseMove(event: MouseEvent) {
     if (!isDragging) return;
     
     if (dragType === 'vertical') {
-      const containerWidth = containerRef.clientWidth;
+      const containerWidth = containerRef?.clientWidth || 0;
       const deltaX = event.clientX - startX;
       const deltaPercent = (deltaX / containerWidth) * 100;
       leftPaneWidth = Math.max(20, Math.min(80, initialSizes.leftWidth + deltaPercent));
     } else if (dragType.startsWith('horizontal-')) {
       const panelIndex = parseInt(dragType.split('-')[1]);
-      const containerHeight = containerRef.querySelector('.right-panels').clientHeight;
+      const containerHeight = containerRef?.querySelector('.right-panels')?.clientHeight || 0;
       const deltaY = event.clientY - startY;
       const deltaPercent = (deltaY / containerHeight) * 100;
       
@@ -82,6 +82,9 @@
   <!-- Vertical Resize Handle -->
   <div 
     class="resize-handle vertical-handle"
+    role="button"
+    tabindex="0"
+    aria-label="Resize vertical split"
     on:mousedown={(e) => startDrag(e, 'vertical')}
   ></div>
   
@@ -104,6 +107,9 @@
         <!-- Horizontal Resize Handle -->
         <div 
           class="resize-handle horizontal-handle"
+          role="button"
+          tabindex="0"
+          aria-label="Resize horizontal split"
           on:mousedown={(e) => startDrag(e, `horizontal-${index}`)}
         ></div>
       {/if}

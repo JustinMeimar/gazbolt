@@ -1,9 +1,9 @@
 <script>
-  import Header from './components/Header.svelte';
-  import Footer from './components/Footer.svelte';
-  import CodeEditor from './components/CodeEditor.svelte';
-  import OutputPanel from './components/OutputPanel.svelte';
-  import { code, stdout, stderr, stdin, checkServerConnection, isServerConnected } from './stores/codeStore';
+  import Header from '$lib/components/Header.svelte';
+  import Footer from '$lib/components/Footer.svelte';
+  import CodeEditor from '$lib/components/CodeEditor.svelte';
+  import OutputPanel from '$lib/components/OutputPanel.svelte';
+  import { code, stdout, stderr, stdin, checkServerConnection, isServerConnected } from '$lib/stores/codeStore';
 </script>
 
 <main class="flex flex-col h-screen" style="background-color: #131312;">
@@ -33,7 +33,6 @@
 
         <!-- Standard Output -->
         <div class="flex-1 flex flex-col mb-4" style="min-height: 0;">
-          abcbabcb 
           <OutputPanel 
             title="Standard Output" 
             panelType="stdout" 

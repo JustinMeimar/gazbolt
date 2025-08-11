@@ -1,5 +1,5 @@
 <script>
-  import { isServerConnected } from '../stores/codeStore.ts';
+  import { isServerConnected } from '$lib/stores/codeStore';
 </script>
 
 <header style="background-color: #222020; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">  

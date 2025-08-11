@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { stdin, exitStatus } from '$lib/stores/codeStore';
   
   export let title = "";
@@ -13,7 +13,7 @@
    
   $: if (inputValue) {
     if (showRaw) {
-      if (!setRawBytes(inputValue)) {
+      if (!setRawBytes()) {
         isValidRawStr = false;
       } else {
         isValidRawStr = true;
@@ -23,7 +23,7 @@
     }
   }
 
-  const toRawBytes = (str) => {
+  const toRawBytes = (str: string) => {
     if (!str) return "";
     const escaped = JSON.stringify(str);
     return "b'" + escaped.slice(1, -1) + "'";
@@ -73,6 +73,7 @@
       <button
         on:click={copyToClipboard}
         class="p-1 hover:bg-gray-700 rounded transition-colors"
+        aria-label="Copy to clipboard"
         title="Copy to clipboard"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#01F1B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
