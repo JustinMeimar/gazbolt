@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 import { get } from "svelte/store";
-import { getBackendUrl } from "$lib/config";
+import { getBackendUrl } from "$lib/api/optionsApi";
 
 // Program State
 export const code = writable("");
@@ -99,3 +99,4 @@ export function clearOutputs() {
   stdout.set("");
   stderr.set("");
 }
+

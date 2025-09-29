@@ -1,5 +1,5 @@
-node_modules
-**/build/
+# Important
+bin
 
 # Output
 .output
@@ -8,6 +8,8 @@ node_modules
 .wrangler
 /.svelte-kit
 /build
+node_modules
+**/build/
 
 # OS
 .DS_Store
@@ -18,11 +20,8 @@ Thumbs.db
 .env.*
 !.env.example
 !.env.test
-
-# Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 **/TODO.md
-CLAUDE.md
 **/.svelte-kit

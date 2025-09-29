@@ -1,6 +1,12 @@
-import { get } from "svelte/store";
-import { getBackendUrl } from "$lib/config";
-import { selectedConfig, checkServerConnection } from "$lib/stores/codeStore";
+import { checkServerConnection } from "$lib/stores/codeStore";
+
+export function getBackendUrl(): string {
+  const uri = import.meta.env.VITE_BACKEND_URI; 
+  if (uri) {
+    return uri;
+  }
+  return "http://0.0.0.0:8001";
+}
 
 export async function fetchConfigs() {
   const connected = await checkServerConnection();
@@ -8,7 +14,6 @@ export async function fetchConfigs() {
     console.log("Cannot fetch configs: server is unreachable");
     return [];
   }
-
   try {
     const backendUrl = getBackendUrl();
     const configsResponse = await fetch(`${backendUrl}/configs`);
@@ -25,7 +30,6 @@ export async function fetchToolChains(configName: string) {
     console.log("Cannot fetch toolchains: server is unreachable");
     return [];
   }
-
   try {
     const backendUrl = getBackendUrl();
     const toolchainsResponse = await fetch(
@@ -44,7 +48,6 @@ export async function fetchTests(configName: string) {
     console.log("Cannot fetch tests: server is unreachable");
     return [];
   }
-
   try {
     const backendUrl = getBackendUrl();
     const toolchainsResponse = await fetch(
@@ -56,3 +59,4 @@ export async function fetchTests(configName: string) {
     return [];
   }
 }
+
