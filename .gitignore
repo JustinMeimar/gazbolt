@@ -1,5 +1,6 @@
 # Important
-bin
+./bin
+**/bin
 
 # Output
 .output
