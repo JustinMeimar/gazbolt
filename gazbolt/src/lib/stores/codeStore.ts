@@ -96,8 +96,6 @@ export async function runCode() {
 }
 
 export function clearOutputs() {
-  code.set("");
-  stdin.set("");
   stdout.set("");
   stderr.set("");
 }

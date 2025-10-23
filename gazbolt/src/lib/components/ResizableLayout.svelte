@@ -12,7 +12,13 @@
   
   // Default sizes
   let leftPaneWidth = 50; // percentage
-  let rightPanelHeights = [33.33, 33.33, 33.34]; // percentages
+  let rightPanelHeights = [50, 50]; // percentages for 2 panels
+
+  // Reactively adjust panel heights when rightPanels array changes
+  $: if (rightPanels.length > 0 && rightPanelHeights.length !== rightPanels.length) {
+    const equalHeight = 100 / rightPanels.length;
+    rightPanelHeights = Array(rightPanels.length).fill(equalHeight);
+  }
   
   function startDrag(event: MouseEvent, type: string) {
     isDragging = true;

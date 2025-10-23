@@ -4,12 +4,11 @@
   import CodeEditor from '$lib/components/CodeEditor.svelte';
   import OutputPanel from '$lib/components/OutputPanel.svelte';
   import ResizableLayout from '$lib/components/ResizableLayout.svelte';
-  import { code, stdout, stderr, stdin, hideStdin } from '$lib/stores/codeStore';
+  import { code, stdout, stderr } from '$lib/stores/codeStore';
   
   $: rightPanels = [
     { title: 'Standard Output', type: 'stdout', content: stdout },
-    { title: 'Standard Error', type: 'stderr', content: stderr },
-    ...($hideStdin ? [] : [{ title: 'Standard Input', type: 'stdin', content: stdin }])
+    { title: 'Standard Error', type: 'stderr', content: stderr }
   ];
 </script>
 
@@ -40,14 +39,6 @@
         />
       </div>
       
-      <div slot="right-2" class="h-full">
-        <OutputPanel 
-          title="Standard Input" 
-          panelType="stdin" 
-          content={$stdin}
-          isInput={true} 
-        />
-      </div>
     </ResizableLayout>
   </div>
 

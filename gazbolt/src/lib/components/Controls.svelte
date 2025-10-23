@@ -3,7 +3,7 @@
   import { fetchConfigs, fetchToolChains, fetchTests } from '../api/optionsApi';
   import { selectedConfig, selectedToolchain, selectedProgram, code,
            stdout, stderr, stdin, exitStatus, clearOutputs, runCode,
-           stringToB64, b64ToString, hideStdin, checkServerConnection } from '$lib/stores/codeStore';
+           stringToB64, b64ToString, checkServerConnection } from '$lib/stores/codeStore';
 
   // Options for dropdowns
   export let configs: any[] = [];
@@ -135,13 +135,5 @@
       <img src="clear-icon.png" alt="Clear" class="h-3 w-3 mr-1" />
       Clear
     </button>
-    <label class="flex items-center gap-1 text-xs cursor-pointer whitespace-nowrap" style="color: #01F1B3;">
-      <input
-        type="checkbox"
-        bind:checked={$hideStdin}
-        class="w-3 h-3"
-      />
-      stdin
-    </label>
   </div>
 </div>
