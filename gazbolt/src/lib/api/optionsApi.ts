@@ -5,7 +5,7 @@ export function getBackendUrl(): string {
   if (uri) {
     return uri;
   }
-  return "http://0.0.0.0:8001";
+  return "http://0.0.0.0:8000";
 }
 
 export async function fetchConfigs() {

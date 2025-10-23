@@ -53,6 +53,7 @@ export function b64ToString(b64: string): string {
 
 // Run the current code on selected config and toolchain.
 export async function runCode() {
+  console.log("RUnning code...")
   const configValue = get(selectedConfig);
   const toolchain = get(selectedToolchain);
 
@@ -85,6 +86,7 @@ export async function runCode() {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const json_res = await response.json();
+    console.log(json_res);
     stderr.set(b64ToString(json_res.results.stderr));
     stdout.set(b64ToString(json_res.results.stdout));
     exitStatus.set(json_res.results.exit_status);
