@@ -2,6 +2,7 @@ FROM oven/bun:1-alpine AS frontend
 WORKDIR /app/gazbolt
 COPY ./gazbolt .
 ARG VITE_BACKEND_URI
+RUN bun add -D vite
 RUN VITE_BACKEND_URI="$VITE_BACKEND_URI" bun run build
 
 # fooey
