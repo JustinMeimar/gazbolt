@@ -1,0 +1,44 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        VITE_BACKEND_URI: ${VITE_BACKEND_URI:-http://backend:8000}
+    volumes:
+      - frontend_build:/app/gazbolt/build
+    networks:
+      - gazbolt-network
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    volumes:
+      - frontend_build:/app/gazbolt/build:ro
+    networks:
+      - gazbolt-network
+    environment:
+      - DR_SERVER_MODE=PROD
+      - DR_STATIC_DIR=/app/gazbolt/build
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+volumes:
+  frontend_build:
+
+networks:
+  gazbolt-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
