@@ -1,11 +1,3 @@
-FROM oven/bun:1-alpine AS frontend
-WORKDIR /app/gazbolt
-COPY ./gazbolt .
-ARG VITE_BACKEND_URI
-RUN bun add -D vite
-RUN VITE_BACKEND_URI="$VITE_BACKEND_URI" bun run build
-
-# fooey
 FROM python:3.11-slim AS backend
 RUN apt-get update && apt-get install -y llvm-19 llvm-19-tools && rm -rf /var/lib/apt/lists/*
 RUN ln -s /usr/bin/lli-19 /usr/bin/lli && ln -s /usr/bin/clang-19 /usr/bin/clang
@@ -19,7 +11,8 @@ WORKDIR /app/dragon-runner
 COPY --chown=gazbolt:gazbolt ./dragon-runner .
 RUN pip install .
 
-COPY --chown=gazbolt:gazbolt --from=frontend /app/gazbolt/build /app/gazbolt/build
+# Install requests for healthcheck
+RUN pip install requests
 
 USER gazbolt
 ENV DR_SERVER_MODE=PROD
